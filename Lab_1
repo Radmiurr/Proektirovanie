@@ -1,0 +1,164 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Student
+{
+    public string Name;
+    public string Pasport;
+    public int EGE;
+    public DateTime Time;
+
+    public void PrintInfoStudent()
+    {
+        Console.WriteLine($"Имя: {Name}");
+        Console.WriteLine($"Паспорт: {Pasport}");
+        Console.WriteLine($"Баллы ЕГЭ: {EGE}");
+        Console.WriteLine($"Время: {Time}");
+        System.Console.WriteLine("\n");
+    }
+
+
+    public DateTime RandomDate()
+    {
+        Random random = new Random();
+        DateTime startDate = new DateTime(2000, 1, 1);
+        DateTime endDate = new DateTime(2024, 2, 10);
+        int range = (endDate - startDate).Days;
+        DateTime randomDate = startDate.AddDays(random.Next(range));
+        DateTime randomDateWithTime = randomDate.Add(new TimeSpan(0, random.Next(0, 24), random.Next(0, 60), random.Next(0, 60), random.Next(0, 1000)));
+        return randomDateWithTime;
+    }
+}
+
+public static class Menedger
+{
+    public static void MaxBall(List<Student> students)
+    {
+        Student maxEge = students[0];
+        foreach (var student in students)
+        {
+            if (student.EGE > maxEge.EGE)
+            {
+                maxEge = student;
+
+            }
+        }
+        Console.WriteLine("Студент с максимальным баллом");
+        maxEge.PrintInfoStudent();
+
+    }
+
+    public static void AllList(Student[] students)
+    {
+
+        foreach (var student in students)
+        {
+            student.PrintInfoStudent();
+        }
+
+    }
+
+
+    public static void SearchStudent(List<Student> students, string name)
+    {
+        foreach (var student in students)
+        {
+            if (student.Name.Contains(name))
+            {
+                student.PrintInfoStudent();
+            }
+        }
+    }
+
+    public static Student[] SortedForDate(List<Student> students) => students.OrderBy(student => student.Time).ToArray();
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student student1 = new Student();
+        student1.Name = "Ivan";
+        student1.Pasport = "333-666";
+        student1.EGE = 200;
+        student1.Time = student1.RandomDate();
+
+        Student student2 = new Student();
+        student2.Name = "Dima";
+        student2.Pasport = "333-666";
+        student2.EGE = 211;
+        student2.Time = student2.RandomDate();
+
+        Student student3 = new Student();
+        student3.Name = "Tom";
+        student3.Pasport = "333-666";
+        student3.EGE = 195;
+        student3.Time = student3.RandomDate();
+
+        Student student4 = new Student();
+        student4.Name = "Bob";
+        student4.Pasport = "333-666";
+        student4.EGE = 253;
+        student4.Time = student4.RandomDate();
+
+        Student student5 = new Student();
+        student5.Name = "Ekaterine";
+        student5.Pasport = "333-666";
+        student5.EGE = 191;
+        student5.Time = student5.RandomDate();
+
+        Student student6 = new Student();
+        student6.Name = "Nasty";
+        student6.Pasport = "333-666";
+        student6.EGE = 237;
+        student6.Time = student6.RandomDate();
+
+        Student student7 = new Student();
+        student7.Name = "James";
+        student7.Pasport = "333-666";
+        student7.EGE = 288;
+        student7.Time = student7.RandomDate();
+
+        Student student8 = new Student();
+        student8.Name = "Georgy";
+        student8.Pasport = "333-666";
+        student8.EGE = 187;
+        student8.Time = student8.RandomDate();
+
+        Student student9 = new Student();
+        student9.Name = "Oleg";
+        student9.Pasport = "333-666";
+        student9.EGE = 199;
+        student9.Time = student9.RandomDate();
+
+        Student student10 = new Student();
+        student10.Name = "Andy";
+        student10.Pasport = "333-666";
+        student10.EGE = 222;
+        student10.Time = student10.RandomDate();
+
+        List<Student> students = new List<Student>
+        {
+            student1, student2, student3, student4, student5, student6, student7, student8, student9, student10
+        };
+
+        Menedger.MaxBall(students);
+        Console.WriteLine("Отсортированный массив:");
+        Student[] sortedArr = Menedger.SortedForDate(students);
+        Menedger.AllList(sortedArr);
+        Console.ReadLine();
+        Console.WriteLine($"Введите имя студента");
+        string search_name = Console.ReadLine();
+        Console.WriteLine("Найденный студент:");
+        Menedger.SearchStudent(students, search_name);
+        Console.ReadLine();
+
+
+
+
+    }
+
+
+}
+
