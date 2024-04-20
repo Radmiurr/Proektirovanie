@@ -1,11 +1,6 @@
-﻿using System;
+using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Net.Mail;
 using System.Threading;
 
 
@@ -27,21 +22,21 @@ class Teacher
             // Проверка почты
             if (!Regex.IsMatch(email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
             {
-                LogError("Почта содержит некорректный формат.");
+                throw new Exception("Почта содержит некорректный формат.");
             }
             this.email = email;
 
             // Проверка имени
             if (!Regex.IsMatch(name, @"^[А-Яа-я]+$"))
             {
-                LogError("Имя содержит некорректные символы.");
+                throw new Exception("Имя содержит некорректные символы.");
             }
             this.name = name;
 
             // Проверка возраста
             if (age <= 0 || age > 120)
             {
-                LogError("Некорректный возраст.");
+                throw new Exception("Некорректный возраст.");
             }
             this.age = age;
 
@@ -49,12 +44,13 @@ class Teacher
         }
         catch (Exception e)
         {
-            Console.WriteLine("Ошибка: " + e.Message);
+            LogError(e.Message);
+            throw;
         }
         finally
         {
             Console.WriteLine("Создание объекта завершено.");
-        } 
+        }
     }
 
     private void LogError(string errorMessage)
